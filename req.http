@@ -1,0 +1,12 @@
+@basseurl=http://localhost:3333/api
+
+POST {{basseurl}}/lista
+Content-Type: application/json
+
+{
+    "nome": "terceira",
+    "descricao": "Descricao de teste da terceira lista"
+}
+###
+
+GET {{basseurl}}/lista
