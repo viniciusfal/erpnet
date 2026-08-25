@@ -9,4 +9,13 @@ Content-Type: application/json
 }
 ###
 
+PUT {{basseurl}}/lista/01a02c5c-1599-7962-9daf-7ce4a458bd2e
+Content-Type: application/json
+
+{
+    "nome": "segunda editada",
+    "descricao": "Nova descricao da terceira lista atualizada"
+}
+
+###
 GET {{basseurl}}/lista

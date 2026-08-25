@@ -40,3 +40,21 @@ func (u *Usecase) FindAll(ctx context.Context) ([]lista.Lista, error) {
 
 	return l, err
 }
+
+func (u *Usecase) Edit(ctx context.Context, input *lista.Lista) (*lista.Lista, error) {
+	listaAtual, err := u.repo.FindById(ctx, input.ID)
+	if err != nil {
+		return nil, err
+	}
+
+	listaNova, err := listaAtual.Editar(input)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := u.repo.Update(ctx, listaNova); err != nil {
+		return nil, err
+	}
+
+	return listaNova, nil
+}

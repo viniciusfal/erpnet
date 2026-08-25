@@ -3,6 +3,7 @@ package postgres
 import (
 	"context"
 
+	"github.com/google/uuid"
 	"github.com/jackc/pgx/v5/pgxpool"
 	"github.com/viniciusfal/erpnet/internal/domain/lista"
 )
@@ -24,19 +25,55 @@ func (r *ListaRepository) Save(ctx context.Context, l *lista.Lista) error {
     `
 
 	_, err := r.db.Exec(ctx, query, l.ID, l.Nome, l.Descricao)
-	if err != nil {
-		return err
-	}
 
 	return err
 }
 
-func (r *ListaRepository) Update(ctx context.Context, lista *lista.Lista) error {
-	return nil
+func (r *ListaRepository) Update(ctx context.Context, l *lista.Lista) error {
+
+	query := `
+		UPDATE  lista
+		SET 
+			nome = $2
+			, descricao = $3
+			, data_atualizacao = $4
+		WHERE id = $1
+	`
+
+	_, err := r.db.Exec(ctx, query,
+		l.ID,
+		l.Nome,
+		l.Descricao,
+		l.DataAtualizacao)
+
+	return err
 }
 
-func (r *ListaRepository) FindById(ctx context.Context, idLista string) (*lista.Lista, error) {
-	return nil, nil
+func (r *ListaRepository) FindById(ctx context.Context, idLista uuid.UUID) (*lista.Lista, error) {
+	var l lista.Lista
+
+	query := `
+		SELECT 
+			id
+			, nome
+			, descricao 
+			, data_criacao
+			, data_atualizacao
+		FROM lista
+		WHERE id = $1
+	`
+
+	if err := r.db.QueryRow(ctx, query, idLista).Scan(
+		&l.ID,
+		&l.Nome,
+		&l.Descricao,
+		&l.DataCriacao,
+		&l.DataAtualizacao,
+	); err != nil {
+		return nil, err
+	}
+
+	return &l, nil
 }
 
 func (r *ListaRepository) FindAll(ctx context.Context) ([]lista.Lista, error) {
@@ -79,6 +116,6 @@ func (r *ListaRepository) FindAll(ctx context.Context) ([]lista.Lista, error) {
 	return listas, nil
 }
 
-func (r *ListaRepository) Delete(ctx context.Context, idLista string) error {
+func (r *ListaRepository) Delete(ctx context.Context, idLista uuid.UUID) error {
 	return nil
 }

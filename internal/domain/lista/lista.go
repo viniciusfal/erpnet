@@ -47,19 +47,21 @@ func CreateLista(input InputLista) (*Lista, error) {
 	return &l, nil
 }
 
-func (l *Lista) Editar(input InputLista) (*Lista, error) {
+func (l *Lista) Editar(input *Lista) (*Lista, error) {
 
-	if strings.TrimSpace(l.Nome) == "" {
+	if strings.TrimSpace(input.Nome) == "" {
 		return nil, ERRNOMEOBRIGATORIO
 	}
 
 	atual := time.Now()
 
-	novaLista := Lista{
-		Nome:            l.Nome,
-		Descricao:       l.Descricao,
+	novaLista := &Lista{
+		ID:              l.ID,
+		Nome:            input.Nome,
+		Descricao:       input.Descricao,
+		DataCriacao:     l.DataCriacao,
 		DataAtualizacao: &atual,
 	}
 
-	return &novaLista, nil
+	return novaLista, nil
 }

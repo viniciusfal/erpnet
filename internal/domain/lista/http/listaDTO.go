@@ -7,7 +7,7 @@ import (
 	"github.com/viniciusfal/erpnet/internal/domain/lista"
 )
 
-type CreteListaReq struct {
+type ListaReq struct {
 	Nome      string  `json:"nome" binding:"required,min=3,max=100"`
 	Descricao *string `json:"descricao" binding:"omitempty"`
 }
