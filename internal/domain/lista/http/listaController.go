@@ -99,3 +99,31 @@ func (c *ListaController) FindAll(ctx *gin.Context) {
 
 	ctx.JSON(http.StatusOK, ToResponseList(listas))
 }
+
+func (c *ListaController) Remove(ctx *gin.Context) {
+	log := middleware.LoggerFromContext(ctx.Request.Context())
+
+	id := ctx.Param("id")
+	if strings.TrimSpace(id) == "" {
+		payload := apierror.New(http.StatusBadRequest, "ID da lista é obrigatório", "")
+		apierror.Respond(ctx, log, payload)
+		return
+	}
+
+	idParsed, err := uuid.Parse(id)
+	if err != nil {
+		log.Error("ID inválido", "error", err)
+		payload := apierror.New(http.StatusBadRequest, "ID da lista é inválido", err.Error())
+		apierror.Respond(ctx, log, payload)
+		return
+	}
+
+	if err = c.uc.Remove(ctx.Request.Context(), idParsed); err != nil {
+		log.Error("ID inválido", "erro ao tentar remover lista", err)
+		apierror.Respond(ctx, log, mapError(err))
+		return
+	}
+
+	ctx.JSON(http.StatusNoContent, gin.H{id: "Registro excluido com sucesso"})
+
+}

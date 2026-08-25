@@ -65,3 +65,12 @@ func (l *Lista) Editar(input *Lista) (*Lista, error) {
 
 	return novaLista, nil
 }
+
+func (l *Lista) Remove(idLista uuid.UUID) (uuid.UUID, error) {
+
+	if idLista == uuid.Nil {
+		return uuid.Nil, ERRIDOBRIGATORIO
+	}
+
+	return idLista, nil
+}

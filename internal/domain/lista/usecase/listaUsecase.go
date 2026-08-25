@@ -3,6 +3,7 @@ package lista
 import (
 	"context"
 
+	"github.com/google/uuid"
 	"github.com/viniciusfal/erpnet/internal/domain/lista"
 )
 
@@ -57,4 +58,22 @@ func (u *Usecase) Edit(ctx context.Context, input *lista.Lista) (*lista.Lista, e
 	}
 
 	return listaNova, nil
+}
+
+func (u *Usecase) Remove(ctx context.Context, idLista uuid.UUID) error {
+	var l lista.Lista
+
+	id, err := l.Remove(idLista)
+	if err != nil {
+		return err
+	}
+
+	_, err = u.repo.FindById(ctx, id)
+	if err != nil {
+		return err
+	}
+
+	err = u.repo.Delete(ctx, idLista)
+
+	return err
 }

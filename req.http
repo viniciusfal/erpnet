@@ -4,8 +4,7 @@ POST {{basseurl}}/lista
 Content-Type: application/json
 
 {
-    "nome": "terceira",
-    "descricao": "Descricao de teste da terceira lista"
+    "nome": "pronto para excluir"
 }
 ###
 
@@ -19,3 +18,8 @@ Content-Type: application/json
 
 ###
 GET {{basseurl}}/lista
+
+###
+DELETE {{basseurl}}/lista/01a036fc-897b-7678-b8c8-ef8874129ae3
+
+###

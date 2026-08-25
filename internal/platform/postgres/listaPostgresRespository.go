@@ -4,6 +4,7 @@ import (
 	"context"
 
 	"github.com/google/uuid"
+	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgxpool"
 	"github.com/viniciusfal/erpnet/internal/domain/lista"
 )
@@ -117,5 +118,21 @@ func (r *ListaRepository) FindAll(ctx context.Context) ([]lista.Lista, error) {
 }
 
 func (r *ListaRepository) Delete(ctx context.Context, idLista uuid.UUID) error {
-	return nil
+
+	query := `
+		DELETE 
+		FROM lista 
+		WHERE id = $1
+	`
+
+	row, err := r.db.Exec(ctx, query, idLista)
+	if err != nil {
+		return err
+	}
+
+	if row.RowsAffected() == 0 {
+		return pgx.ErrNoRows
+	}
+
+	return err
 }
