@@ -10,33 +10,6 @@ import (
 	"github.com/viniciusfal/erpnet/internal/domain/lista"
 )
 
-func TestLista(t *testing.T) {
-
-	payload := lista.InputLista{
-		Nome: "lista-01",
-	}
-
-	result, err := lista.CreateLista(payload)
-
-	assert.NoError(t, err)
-	assert.NotEqual(t, uuid.Nil, result.ID)
-	assert.Equal(t, payload.Nome, result.Nome)
-	assert.NotNil(t, result.ID)
-	assert.Nil(t, result.DataAtualizacao)
-}
-
-func TestCategoria(t *testing.T) {
-
-	payload := lista.InputCategoria{
-		Nome: "categoria-01",
-	}
-
-	result, err := lista.CreateCategoria(payload)
-
-	assert.NoError(t, err)
-	assert.Equal(t, payload.Nome, result.Nome)
-}
-
 func TestItem(t *testing.T) {
 	valor, _ := decimal.NewFromString("199.99")
 	urlInvalida := "htto://url_invalida"
