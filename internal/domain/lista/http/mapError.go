@@ -14,6 +14,9 @@ func mapError(err error) *apierror.Problem {
 		errors.Is(err, lista.ERRIDOBRIGATORIO):
 		return apierror.New(http.StatusBadRequest, "Erro de validacao", err.Error())
 
+	case errors.Is(err, lista.ERRRNOMECATEGORIAOBRIGATORIO):
+		return apierror.New(http.StatusBadRequest, "Erro de validacao", err.Error())
+
 	default:
 		return apierror.New(http.StatusInternalServerError, "Erro interno do servidor", "")
 	}

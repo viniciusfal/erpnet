@@ -7,4 +7,9 @@ func (c *ListaController) RegisterRoutes(r *gin.RouterGroup) {
 	r.PUT("/lista/:id", c.Edit)
 	r.GET("/lista", c.FindAll)
 	r.DELETE("lista/:id", c.Remove)
+
+}
+
+func (c *CategoriaController) RegisterRoutes(r *gin.RouterGroup) {
+	r.POST("/categoria", c.Create)
 }

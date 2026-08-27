@@ -23,6 +23,7 @@ type ItemRepository interface {
 	Delete(ctx context.Context, idLista uuid.UUID) error
 }
 
+//go:generate mockery --name=CategoriaRepository --with-expecter=true
 type CategoriaRepository interface {
 	Save(ctx context.Context, categoria *Categoria) error
 	Update(ctx context.Context, categoria *Categoria) error

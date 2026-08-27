@@ -10,6 +10,7 @@ type InputCategoria struct {
 }
 
 func CreateCategoria(input InputCategoria) (*Categoria, error) {
+
 	if input.Nome == "" {
 		return nil, ERRRNOMECATEGORIAOBRIGATORIO
 	}

@@ -47,11 +47,16 @@ func main() {
 	listaUC := usecase.NewUseCase(listaRepo)
 	listaCtrl := controller.NewController(listaUC)
 
+	categoriaRepo := postgres.NewCategoriaRepository(conn)
+	categoriaUC := usecase.NewCategoriaUseCase(categoriaRepo)
+	categoriaCtrl := controller.NewCategoriaController(categoriaUC)
+
 	deps := &router.Dependencies{
 		Logger: l,
 		Health: h,
 		Modules: []router.Module{
 			listaCtrl,
+			categoriaCtrl,
 		},
 	}
 	r := router.New(deps)
